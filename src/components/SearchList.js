@@ -1,22 +1,34 @@
-import React, { Component} from 'react'
+import React from 'react'
 
-class SearchList extends Component {
-	render(){
+export default({data, searchValue, addFavourite}) => {
 
-		  	const { data } = this.props;
-			const techsList = data.map(text => {
+			const techsList = data
+			.filter(text => {
+				//remove text that do not match the current text from data
+				return text.text.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
+			})
+			.map(text => {
       		return (
-          		<li key={text.id} className={text.tech}>{text.text}</li>
+				  <li 
+				  	key={text.id} 
+					className={text.tech}
+					onClick={() => addFavourite(text.id)}  
+				  >
+				 	{text.text}
+				  </li>
         	  )
     		})
 
     		return (
-     			<ul>
-            		{techsList}
-          		</ul>
+				<div>
+					<ul>
+            			{techsList}
+          			</ul>
+				</div>
+	
 
     		);
-	}
+	
 }
 
-export default SearchList;
+
